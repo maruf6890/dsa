@@ -105,6 +105,23 @@ void Lsort()
     }
 }
 
+
+//linked-list reverse
+void reverse() {
+    node* prev = nullptr;
+    node* current = head;
+    node* next = nullptr;
+
+    while (current != nullptr) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+}
+
+
 // traverse
 void display()
 {

@@ -2,26 +2,36 @@
 using namespace std;
 const int capacity=5;
 int que[capacity];
-int index=-1;
+int f=-1,r=-1;
 void push(int x){
-    if(index<capacity){
-        index++;
-        que[index]=x;
+    if(r<capacity){
+        if(f==-1 && r==-1) f++;
+        que[++r]=x;
     }else{
         cout<<"stack is full"<<endl;
     }
     
 }
-
+bool isEmpty(){
+    if(f==r) return true;
+    return false;
+}
 void pop()
 {
-    if(index<capacity){
-        for(int i=0; i<=index-1;  i++) que[i]=que[i+1];
+    if(isEmpty()){
+       cout<<"Queue is empty";
+    }else{
+        f++;
+        if(f==r){
+            f=r=-1;
+        }
     }
 }
 void top()
 {
-    cout<<que[0]<<endl;
+   if(!isEmpty())
+   cout<<que[f]<<endl;
+   else cout<<"empty";
 }
 int main(){
     push(1);
@@ -29,9 +39,21 @@ int main(){
     push(3);
     push(4);
     push(5);
+    push(6);
+    push(6);
+    
     top();
     pop();
     top();
+    pop();
+    top();
+    pop();
+    top();
+    pop();
+    top();
+    pop();
+    top();
+
 
 
     return 0; 
