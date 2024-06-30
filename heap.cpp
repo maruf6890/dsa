@@ -5,6 +5,7 @@ const int capacity = 10; // maximum capacity of the heap
 int heap[capacity + 1]; // heap array (1-based index)
 int index = 0; // current number of elements in the heap
 
+// Function to insert a value into the heap
 void insert(int a[], int value) {
     if (index >= capacity) {
         cout << "Heap is full!" << endl;
@@ -27,21 +28,41 @@ void insert(int a[], int value) {
     }
 }
 
-void deleteElement(){
-    if(index>0){
+// Function to maintain the max heap property
+void heapify(int a[], int n, int i) {
+    int largest = i;
+    int l = 2 * i;
+    int r = 2 * i + 1;
 
-        heap[1]=heap[index];
-        int i=1;
-        while(i<=capacity)
-        {
-            int l=i*2;
-            int r=i*2+1;
-            int largest =(heap[l]<=heap[r]) ? 2*i :  2*i+1;
-            if(largest>heap[i]) {swap(heap[largest],heap[i]); i=largest;}
-            else return;
+    if (l <= n && a[l] > a[largest]) 
+        largest = l;
+    if (r <= n && a[r] > a[largest]) 
+        largest = r;
 
+    if (largest != i) {
+        swap(a[largest], a[i]);
+        heapify(a, n, largest);
+    }
+}
+
+// Function to build a heap from an unsorted array
+void buildHeap(int a[], int n) {
+    for (int i = n / 2; i > 0; i--) {
+        heapify(a, n, i);
+    }
+}
+
+// Function to delete a specific element from the heap
+void deleteElement(int value) {
+    int i = 1;
+    while (i <= index) {
+        if (heap[i] == value) {
+            heap[i] = heap[index];
+            index--;
+            heapify(heap, index, i); // Ensure heap property is maintained after deletion
+            break;
         }
-
+        i++;
     }
 }
 
@@ -53,7 +74,18 @@ int main() {
     insert(heap, 4);
     insert(heap, 5);
 
-    // Print the heap
+    // Print the heap before deletion
+    cout << "Heap before deletion: ";
+    for (int i = 1; i <= index; i++) {
+        cout << heap[i] << " ";
+    }
+    cout << endl;
+
+    // Delete an element from the heap
+    deleteElement(4);
+
+    // Print the heap after deletion
+    cout << "Heap after deletion: ";
     for (int i = 1; i <= index; i++) {
         cout << heap[i] << " ";
     }
