@@ -133,7 +133,28 @@ bool isCompleteBinary(struct node *root) {
     return isComplete(root, 0, t);
 }
 
+/ Check for height balance
+bool checkHeightBalance(struct node *root, int *height) {
+  // Check for emptiness
+  int leftHeight = 0, rightHeight = 0;
+  int l = 0, r = 0;
 
+  if (root == NULL) {
+    *height = 0;
+    return 1;
+  }
+
+  l = checkHeightBalance(root->left, &leftHeight);
+  r = checkHeightBalance(root->right, &rightHeight);
+
+  *height = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+
+  if ((leftHeight - rightHeight >= 2) || (rightHeight - leftHeight >= 2))
+    return 0;
+
+  else
+    return l && r;
+}
 int main()
 {
     struct node *root=create(1);
